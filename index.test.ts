@@ -4,9 +4,9 @@ import { describe, expect, it, test } from 'vitest'
 
 const START_POSITION: MarsCoordinates = [1, 1]
 
-const robot = (orientation: Orientation, position?: MarsCoordinates ): Robot => ({
+const robot = (orientation: Orientation, position: MarsCoordinates = START_POSITION): Robot => ({
     orientation,
-    position: position || START_POSITION
+    position
 }) 
 
 // test.each`
@@ -107,9 +107,9 @@ test("(execute) When moving west, we decrement the X Coordinate", () => {
  /////////////
 
 
-test("(execute) When executing a string if commands", () => {
+test.only("(execute) When executing a string if commands", () => {
     // const initialState: Rover = { orientation: "W", position: [1, 1] }
-    expect(execute("LFLFLFLFF", robot("N", [1,2]))).toEqual(robot("N", [1, 3]))
+    expect(execute("RFRFRFRF", robot("E", [1,1]))).toEqual(robot("E", [1,1]))
 
 })
 

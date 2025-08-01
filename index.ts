@@ -60,11 +60,11 @@ export const actionCommand = (cmd: string, robotState: Robot): Robot => {
 }
 
 export const execute = (commands: string, robotState: Robot) => {
-    let res = robotState
+    let currentState = robotState
     const commandList = commands.split('')
 
     commandList.forEach(cmd => {
-        res = actionCommand(cmd, robotState)
+        currentState = actionCommand(cmd, currentState)
     })
-    return res
+    return currentState
 }
