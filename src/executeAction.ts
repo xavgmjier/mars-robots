@@ -1,20 +1,19 @@
-import { turn } from "./movements/turn.ts"
+import { Command, CommandExecutionState, MarsCoordinates, Outcome } from "../utils/types.ts"
+import { getNextPos } from "../utils/utils.ts"
 import { moveForward } from "./movements/move.ts"
-import { convertPrint, getNextPos, initialState } from "../utils/utils.ts"
-import { CommandExecutionState, Outcome, MarsCoordinates, Command } from "../utils/types.ts"
+import { turn } from "./movements/turn.ts"
 
 // Maps a 'last valid position' to the corresponding 'out of bounds' position for a failed operation
 const lostRobotMap: Record<string, string> = {}
 
-
 export const actionCommand = (command: Command, robotState: CommandExecutionState, maxPlanetSize: MarsCoordinates): CommandExecutionState => {
     const { orientation } = robotState
-
+    
     if (command === "L") return turn(command, orientation)(robotState)
     if (command === "R") return turn(command, orientation)(robotState)
     if (command === "F") return moveForward(robotState, maxPlanetSize)
 
-    return { ...robotState, operationOutcome: Outcome.Success }
+    return { ...robotState }
 }
 
 export const executeCommand = (instructionString: string, robotState: CommandExecutionState, maxPlanetSize: MarsCoordinates): CommandExecutionState => {
@@ -49,19 +48,4 @@ export const executeCommand = (instructionString: string, robotState: CommandExe
         }
     }
     return currentState
-}
-
-export const run = (instructions: string[]): string[] => {
-    // Using '!' for now so typescript stops moaning...
-    const finalOutputArray = []
-    // takes the first element (grid boundary) off the instruction string array, and separates into max x and y positions
-    const [maxX, maxY] = instructions.shift()?.split(" ")
-    const maxPos: MarsCoordinates = [parseInt(maxX), parseInt(maxY)]
-
-    while (instructions.length > 0) {
-        const [location, command] = [instructions.shift(), instructions.shift()]
-        const state = executeCommand(command!, initialState(location!), maxPos)
-        finalOutputArray.push(convertPrint(state!))
-    }
-    return finalOutputArray
 }
