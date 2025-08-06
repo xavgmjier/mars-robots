@@ -8,14 +8,17 @@ inquirer
     .prompt([
         {
             type: "editor",
-            message: "Provide an input:",
-            name: "instruction-input",
+            message: "Martian Robots - provide an input to return a result:",
+            name: "instruction-input"
         }
     ])
     .then((answers) => {
         const cleanedInput = standardiseInstructionInput(answers['instruction-input'])
         const outputResult = run(cleanedInput)
+        console.log('\n')
+        console.log('Result Output:\n')
         console.log(outputResult)
+        console.log('\n')
 
     })
     .catch((error) => {
