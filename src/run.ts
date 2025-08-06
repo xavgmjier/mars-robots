@@ -3,24 +3,30 @@ import { MarsCoordinates } from "../utils/types.ts"
 import { executeCommand } from "./executeAction.ts"
 
 export const run = (instructions: string[]): string => {
-    // Using '!' for now so typescript stops moaning...
-    const MAX_COORDINATE_VALUE = 50
+    const MAX_GRID_COORDINATE_VALUE = 50
     const finalOutputArray = []
 
     // takes the first element (grid boundary) off the instruction string array, and separates into max x and y positions
-    const [maxX, maxY] = instructions.shift()?.split(" ")
-    const maxXInt = parseInt(maxX)
-    const maxYInt = parseInt(maxY)
+    const marsGridCoordinates = instructions.shift()
 
-    if (maxXInt > MAX_COORDINATE_VALUE || maxYInt > MAX_COORDINATE_VALUE ) return `Boundary coordinate must be less than ${MAX_COORDINATE_VALUE}`
+    if (marsGridCoordinates) {
+        const [maxX, maxY] = marsGridCoordinates.split(" ")
 
+        const maxXInt = parseInt(maxX)
+        const maxYInt = parseInt(maxY)
 
-    const maxPos: MarsCoordinates = [maxXInt, maxYInt]
+        if (maxXInt > MAX_GRID_COORDINATE_VALUE || maxYInt > MAX_GRID_COORDINATE_VALUE)
+            return `Boundary coordinate must be less than ${MAX_GRID_COORDINATE_VALUE}`
 
-    while (instructions.length > 0) {
-        const [location, command] = [instructions.shift(), instructions.shift()]
-        const state = executeCommand(command!, initialState(location!), maxPos)
-        finalOutputArray.push(convertPrint(state!))
+        const maxPos: MarsCoordinates = [maxXInt, maxYInt]
+
+        while (instructions.length > 0) {
+            const [location, command] = [instructions.shift(), instructions.shift()]
+            if (location && command) {
+                const state = executeCommand(command, initialState(location), maxPos)
+                finalOutputArray.push(convertPrint(state))
+            }
+        }
     }
     // return the result as a single string
     return finalOutputArray.join('\n')
