@@ -25,6 +25,6 @@ inquirer
         if (error.isTtyError) {
             console.log("Could not render", error)
         } else {
-            console.log('An error occured', error)
+            console.log('Execution Cancelled: ', error.message)
         }
     });

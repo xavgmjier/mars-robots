@@ -8,7 +8,7 @@ const lostRobotMap: Record<string, string> = {}
 
 export const actionCommand = (command: Command, robotState: CommandExecutionState, maxPlanetSize: MarsCoordinates): CommandExecutionState => {
     const { orientation } = robotState
-    
+
     if (command === "L") return turn(command, orientation)(robotState)
     if (command === "R") return turn(command, orientation)(robotState)
     if (command === "F") return moveForward(robotState, maxPlanetSize)

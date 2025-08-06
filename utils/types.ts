@@ -16,8 +16,8 @@ export type Robot = {
 export enum Outcome {
     Success = "success",
     Failure = "failure"
-} 
+}
 
-export type OperationOutcome = { operationOutcome: Outcome}
+export type OperationOutcome = { operationOutcome: Outcome }
 
 export type CommandExecutionState = Robot & OperationOutcome

@@ -25,7 +25,7 @@ export const initialState = (locationString: string): CommandExecutionState => {
     const yInt = parseInt(y)
     const orientationValue = orientationString as Orientation
 
-    return { orientation: orientationValue, position: [xInt, yInt], operationOutcome: Outcome.Success } 
+    return { orientation: orientationValue, position: [xInt, yInt], operationOutcome: Outcome.Success }
 }
 
 export const convertPrint = (robotState: CommandExecutionState) => {
