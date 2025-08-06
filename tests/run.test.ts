@@ -1,5 +1,6 @@
 import { run } from "../src/run.ts"
 import { describe, expect, test } from 'vitest'
+import { standardiseInstructionInput } from "../utils/utils.ts"
 
 describe("Turning robot left and right", () => {
     test.each`
@@ -56,9 +57,23 @@ describe('Moving robot off the edge', () => {
 })
 
 describe('Execute whole instructions', () => {
+    test('Skips commands that previously lost a robot', () => {
+        const rawInput = 
+            `3 3
+            2 2 N
+            LFFF
+            
+            3 2 N
+            LFFFFFLF
+            `
+        const input = standardiseInstructionInput(rawInput)
+        expect(run(input)).toEqual(["0 2 W LOST", "0 1 S"].join('\n'))
+    
+    })
+
     test('executes a collection of robot commands with a provided world boundary', () => {
-     
-        const input = 
+        // based on the sample data
+        const rawInput = 
         `5 3
         1 1 E
         RFRFRFRF
@@ -68,10 +83,7 @@ describe('Execute whole instructions', () => {
         
         0 3 W
         LLFFFLFLFL`
-        .split('\n')
-        .map(string => string.trim())
-        .filter(trimedString => trimedString !== '')
-
+        const input = standardiseInstructionInput(rawInput)
         expect(run(input)).toEqual(["1 1 E", "3 3 N LOST", "2 3 S"].join("\n"))
     })
 })
@@ -79,22 +91,5 @@ describe('Execute whole instructions', () => {
 test('Catches Mars X and Y coordinates that are greater than 50', () => {
     const input = ["0 51", "0 0 W", "F"]
     expect(run(input)).toEqual("Boundary coordinate must be less than 50")
-
-})
-
-test('Skips commands that previously lost a robot', () => {
-    const input = 
-        `3 3
-        2 2 N
-        LFFF
-        
-        3 2 N
-        LFFFFFLF
-        `
-        .split('\n')
-        .map(string => string.trim())
-        .filter(trimedString => trimedString !== '')
-
-    expect(run(input)).toEqual(["0 2 W LOST", "0 1 S"].join('\n'))
 
 })

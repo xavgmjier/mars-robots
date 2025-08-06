@@ -46,3 +46,10 @@ export const convertPrint = (robotState: CommandExecutionState) => {
     return robotState.operationOutcome === Outcome.Success ? location : `${location} LOST`
 
 }
+
+export const standardiseInstructionInput = (input: string) => {
+    return input
+        .split('\n')
+        .map(string => string.trim())
+        .filter(trimmedString => trimmedString !== '')
+}
