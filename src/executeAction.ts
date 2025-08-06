@@ -20,11 +20,9 @@ export const executeCommand = (instructionString: string, robotState: CommandExe
 
     let currentState = robotState
     const commandList = instructionString.split('')
-    console.log('cmds', instructionString)
 
     for (const command of commandList as Command[]) {
         currentState = actionCommand(command, currentState, maxPlanetSize)
-        console.log(currentState)
 
         if (currentState.operationOutcome === Outcome.Failure) {
 
@@ -35,14 +33,10 @@ export const executeCommand = (instructionString: string, robotState: CommandExe
 
             if (!lostRobotMap[currentPos]) {
                 lostRobotMap[currentPos] = failedPosition
-                console.log('fell off at this movement operation')
-                console.log(lostRobotMap)
                 break
             }
 
             if (lostRobotMap[currentPos]) {
-                console.log('skiped command as it will lead to danger')
-                console.log(lostRobotMap)
                 continue
             }
         }
