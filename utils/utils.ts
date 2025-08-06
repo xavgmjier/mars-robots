@@ -33,8 +33,12 @@ export const isOutOfBounds = (next: MarsCoordinates, max: MarsCoordinates) => {
 }
 
 export const initialState = (locationString: string): CommandExecutionState => {
-    const [x, y, orientation] = locationString.split(" ")
-    return { orientation, position: [parseInt(x), parseInt(y)], operationOutcome: Outcome.Success } as CommandExecutionState
+    const [x, y, orientationString] = locationString.split(" ")
+    const xInt = parseInt(x)
+    const yInt = parseInt(y)
+    const orientationValue = orientationString as Orientation
+
+    return { orientation: orientationValue, position: [xInt, yInt], operationOutcome: Outcome.Success } 
 }
 
 export const convertPrint = (robotState: CommandExecutionState) => {
