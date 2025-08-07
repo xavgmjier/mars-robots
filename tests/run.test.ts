@@ -62,13 +62,13 @@ describe('Execute whole instructions', () => {
             `3 3
             2 2 N
             LFFF
-            
+
             3 2 N
             LFFFFFLF
             `
         const input = standardiseInstructionInput(rawInput)
         expect(run(input)).toEqual(["0 2 W LOST", "0 1 S"].join('\n'))
-    
+
     })
 
     test('executes a collection of robot commands with a provided world boundary', () => {
