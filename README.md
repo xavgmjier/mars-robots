@@ -50,7 +50,7 @@ The following commands must be entered in your terminal.
 ---
 ### Running the program
 
-![screenshot-from-program](martian-robots/mars-robots.png)
+<img width="506" height="187" alt="Image" src="https://github.com/user-attachments/assets/e0cb470a-024b-4b91-83c5-df9160701af9" />
 
 This solution allows for entering an input through a CLI, upon which the program will return a corresponding output.
 
